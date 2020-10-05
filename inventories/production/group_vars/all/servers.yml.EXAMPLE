@@ -1,0 +1,16 @@
+# Section of values that you MUST adjust ------------------------------------------------
+
+# !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+# !!!                                                                            !!!
+# !!!  The host names that you use below MUST RESOLVE on your client and on the  !!!
+# !!!  host where Ansible rules.  You can use IPs here.                          !!!
+# !!!                                                                            !!!
+# !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+# The IP or URL to the (potentially virtual) server to setup VarFish on.
+# varfish_host: "varfish.example.net"  # TODO: MUST update this
+
+# The host for the Jannovar REST API server; defaults to VarFish server.
+varfish_jannovar_host: "{{ varfish_host }}"
+# The host for the PostgreSQL database; defaults to VarFish server.
+varfish_postgres_host: "{{ varfish_host }}"

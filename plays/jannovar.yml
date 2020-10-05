@@ -1,0 +1,4 @@
+- name: install jannovar server
+  hosts: varfish_jannovar_servers
+  roles:
+    - role: bihealth.jannovar_server

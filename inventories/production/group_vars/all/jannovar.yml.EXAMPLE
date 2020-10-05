@@ -1,0 +1,19 @@
+# Section of values that you MUST adjust ------------------------------------------------
+
+# N/A
+
+# Section of values that you SHOULD adjust ----------------------------------------------
+
+# N/A
+
+# Section of values that you MIGHT WANT TO adjust ---------------------------------------
+
+# N/A
+
+# Section of values that you SHOULD NOT have to adjust ----------------------------------
+
+# The Jannovar version to use.
+jannovar_version: "0.35"
+
+# Run Jannovar without nginx.
+jannovar_require_nginx: false

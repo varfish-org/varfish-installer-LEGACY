@@ -1,0 +1,40 @@
+# Inventory VarFish and related servers
+#
+# All configuration comes from `group_vars/all/*.yml`.
+#
+# Do not modify unless you know what you are doing.
+varfish_related_servers:
+  children:
+    varfish_servers:
+      hosts:
+        varfish:
+          ansible_host:  "{{ varfish_host }}"
+
+    varfish_postgres_servers:
+      hosts:
+        postgres:
+          ansible_host:  "{{ varfish_postgres_host }}"
+
+    varfish_jannovar_servers:
+      hosts:
+        jannovar:
+          ansible_host: "{{ varfish_jannovar_host }}"
+
+    # cadd_servers:
+    #   hosts:
+    #     cubi-cadd-staging.bihealth.org:
+    #       proxmox_vmid: "140"
+    #       proxmox_host: s-cubi-kvm-3
+    #       instance_name: cubi-cadd-staging
+    #       cadd_rest_api_server_version: v0.2.1
+    # exomiser_servers:
+    #   hosts:
+    #     cubi-exomiser-staging.bihealth.org:
+    #       proxmox_vmid: "138"
+    #       proxmox_host: s-cubi-kvm-2
+    #       instance_name: cubi-exomiser-staging
+    #       # Pin the version per-environment.
+    #       exomiser_data_download_date: "2019-11-05"
+    #       exomiser_version: "12.1.0"
+    #       exomiser_phenotype_version: "1909"
+    #       exomiser_data_version: "1909"

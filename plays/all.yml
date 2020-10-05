@@ -1,0 +1,4 @@
+import_playbook:
+  - postgres.yml
+  - jannovar.yml
+  - varfish.yml

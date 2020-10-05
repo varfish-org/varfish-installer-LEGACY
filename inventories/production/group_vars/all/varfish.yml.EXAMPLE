@@ -1,0 +1,100 @@
+# -----------------------------------------------------------------------------------------------
+# Section of values that you SHOULD adjust
+# -----------------------------------------------------------------------------------------------
+
+# The VarFish version to install.  This selects the Git tag to check out from Github
+# from the server.
+varfish_version: master  # TODO: OPTIONALLY adjust
+
+# The prefix for email subjects.
+varfish_email_prefix: "[CUSTOM VarFish]"
+# Optionally, enable sending of email.
+sodar_core_app_email_enabled: false
+# The email address to put as the sender for emails sent by VarFish.
+sodar_core_app_email_sender: varfish@example.org
+# The URL of the SMTP server to send through.
+sodar_core_app_email_url: "smtp://smtp.example.org"
+
+# Optionally, disable Jannovar (disables annotation of all transcripts in details).
+varfish_enable_jannovar: true
+varfish_jannovar_rest_api_url: http://127.0.0.1:8080/
+
+# Optionally, configure up to two LDAP authentication sources.
+# sodar_core_app_ldap:
+#   - enabled: true
+#     uri: "ldap://ldap.example.org"
+#     bind_dn: "CN=varfish,OU=users,DC=example,DC=org"
+#     bind_password: "{{ lookup('passwordstore', 'varfish/password_varfish@example.org') }}"
+#     user_search_base: "OU=users,DC=example,DC=org"
+#     domain: "EXAMPLE-ORG"
+#     domain_printable: "Example.org"
+#   - enabled: true
+#     uri: "ldap://ldap.example.net"
+#     bind_dn: "CN=varfish,OU=users,DC=example,DC=net"
+#     bind_password: "{{ lookup('passwordstore', 'varfish/password_varfish@example.net') }}"
+#     user_search_base: "OU=users,DC=example.DC=net"
+#     domain: "EXAMPLE.NET"
+#     domain_printable: "Example.net"
+
+# -----------------------------------------------------------------------------------------------
+# Section of values that you COULD adjust
+# -----------------------------------------------------------------------------------------------
+
+# Number of worker processes for import (max. number of concurrent importer jobs).
+varfish_celery_workers_import: 8
+
+# The name of the instance (use this to differentiate between production and staging,
+# for example).
+instance_name: varfish
+
+# Optionally, adjust extra annotations feature.  Requires extra import of extra
+# annotations.
+# XXX: this requires documentation on how to import
+# varfish_enable_extra_annos: true
+
+# Optionally, enable annotation with custom CADD scoring server.
+# varfish_enable_cadd: true
+# CADD RES API base URL.
+# varfish_cadd_rest_api_url: https://cadd.example.org/
+
+# Optionally, enable Exomiser prioritiasation.
+# varfish_enable_exomiser_prioritiser: true
+# varfish_exomiser_prioritiser_api_url: https://exomiser.example.org/exomiser/api/prioritise/
+
+# Optionally, disallow creation of local users.
+sodar_core_app_allow_local_users: true
+
+# -----------------------------------------------------------------------------------------------
+# Section of values that you SHOULD NOT have to adjust
+# -----------------------------------------------------------------------------------------------
+
+# Enable submission of filter results to public CADD server.
+varfish_enable_cadd_submission: true
+
+# Obtain VarFish Server from public Github repository.
+varfish_git_repo: https://github.com/bihealth/varfish-server.git
+
+# The manual assumes that the user and database are created from Ansible.  If you setup
+# your postgres database manually then you can override the settings below.
+postgres_client_create_user_and_db: true
+postgres_client_db: "{{ instance_name }}"
+postgres_client_user: "{{ instance_name }}"
+postgres_client_password: "{{ lookup('passwordstore', 'varfish/password_postgres') }}"
+
+# A local minio server is used for storage of uploads.
+minio_volumes:
+  - /srv/minio-data
+minio_access_key: "{{ lookup('passwordstore', 'varfish/minio_access_key') }}"
+minio_secret_key: "{{ lookup('passwordstore', 'varfish/minio_secret_key') }}"
+
+# Enable storage in S3/MinIO from VarFish.
+varfish_enable_upload_s3: true
+varfish_upload_s3_url: http://localhost:9000
+varfish_upload_s3_access_key: "{{ lookup('passwordstore', 'varfish/minio_access_key') }}"
+varfish_upload_s3_secret_key: "{{ lookup('passwordstore', 'varfish/minio_secret_key') }}"
+
+# Some basic configuration for VarFish.
+sodar_core_app_version: "{{ varfish_version }}"
+sodar_core_app_django_secret_key: "{{ lookup('passwordstore', 'varfish/django_secret_key') }}"
+sodar_core_app_superuser_password: "{{ lookup('passwordstore', 'varfish/password_root@sodar-core-app') }}"
+sodar_core_app_build_docs: true

@@ -1,0 +1,6 @@
+- name: install and setup postgres server for varfish
+  hosts: varfish_postgres_servers
+  roles:
+    - role: bihealth.postgres_server
+      vars:
+        postgres_server_max_connections: 500

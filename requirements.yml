@@ -1,0 +1,8 @@
+---
+
+- src: bihealth.varfish_server
+  version: v0.3.2
+- src: bihealth.postgres_server
+  version: v0.2.2
+- src: bihealth.jannovar_server
+  version: v0.2.1
