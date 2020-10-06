@@ -19,10 +19,16 @@ show-help:
 	@echo "check       -- perform sanity check"
 	@echo "deps        -- install installer dependencies with ansible-galaxy"
 	@echo "configs     -- copy configuration files if not exists yet"
+	@echo "secrets     -- create file with secret strings"
 	@echo ""
 	@echo "postgres    -- install PostgreSQL"
 	@echo "jannovar    -- install Jannovar REST API"
 	@echo "varfish     -- install VarFish server and initialize database"
+
+inventories/production/group_vars/all/secrets.yml:
+	@bash $@.sh > $@
+
+secrets: inventories/production/group_vars/all/secrets.yml
 
 inventories/production/group_vars/all/%.yml: inventories/production/group_vars/all/%.yml.EXAMPLE
 	@if [[ -e $@ ]]; then \

@@ -79,22 +79,22 @@ varfish_git_repo: https://github.com/bihealth/varfish-server.git
 postgres_client_create_user_and_db: true
 postgres_client_db: "{{ instance_name }}"
 postgres_client_user: "{{ instance_name }}"
-postgres_client_password: "{{ lookup('passwordstore', 'varfish/password_postgres') }}"
+#postgres_client_password: "{{ lookup('passwordstore', 'varfish/password_postgres') }}"
 
 # A local minio server is used for storage of uploads.
 minio_volumes:
   - /srv/minio-data
-minio_access_key: "{{ lookup('passwordstore', 'varfish/minio_access_key') }}"
-minio_secret_key: "{{ lookup('passwordstore', 'varfish/minio_secret_key') }}"
+#minio_access_key: "{{ lookup('passwordstore', 'varfish/minio_access_key') }}"
+#minio_secret_key: "{{ lookup('passwordstore', 'varfish/minio_secret_key') }}"
 
 # Enable storage in S3/MinIO from VarFish.
 varfish_enable_upload_s3: true
 varfish_upload_s3_url: http://localhost:9000
-varfish_upload_s3_access_key: "{{ lookup('passwordstore', 'varfish/minio_access_key') }}"
-varfish_upload_s3_secret_key: "{{ lookup('passwordstore', 'varfish/minio_secret_key') }}"
+#varfish_upload_s3_access_key: "{{ lookup('passwordstore', 'varfish/minio_access_key') }}"
+#varfish_upload_s3_secret_key: "{{ lookup('passwordstore', 'varfish/minio_secret_key') }}"
 
 # Some basic configuration for VarFish.
 sodar_core_app_version: "{{ varfish_version }}"
-sodar_core_app_django_secret_key: "{{ lookup('passwordstore', 'varfish/django_secret_key') }}"
-sodar_core_app_superuser_password: "{{ lookup('passwordstore', 'varfish/password_root@sodar-core-app') }}"
+#sodar_core_app_django_secret_key: "{{ lookup('passwordstore', 'varfish/django_secret_key') }}"
+#sodar_core_app_superuser_password: "{{ lookup('passwordstore', 'varfish/password_root@sodar-core-app') }}"
 sodar_core_app_build_docs: true

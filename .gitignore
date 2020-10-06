@@ -1,5 +1,4 @@
 # VarFish installer
-.password-store/
 /inventories/production/group_vars/all/*.yml
 
 # Ansible

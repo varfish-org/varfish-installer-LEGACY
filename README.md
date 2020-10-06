@@ -11,59 +11,46 @@ This manual assumes that:
 
 ## Prerequisites
 
-- Install Ansible.
-- Install [Unix Password Store](https://www.passwordstore.org/) and setup GPG with `gpg-agent` support.
-  NB: see the remark at "Generate Passwords With Password-Store" on how to work around this requirement at the cost of some security.
+- Install Ansible ([Ansible Manual](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html)).
+- Install pwgen (`apt install pwgen` or `yum install pwgen`).
 
 ## Quickstart
 
 ### Clone the Installer
 
 ```bash
-host:~$ git clone https://github.com/bihealth/varfish-ansible.git
-host:~$ cd varfish-ansible
-host:varfish-ansible$
+host:~$ git clone https://github.com/bihealth/varfish-installer.git
+host:~$ cd varfish-installer
+host:varfish-installer$
 ```
 
 Consider making a fork of the repository to keep your configuration changes in Git.
 Note that our `.gitignore` prevents adding the configuration files to Git, so you might want to update this in your fork.
 
-### Generate Passwords With Password-Store
-
-First, define the environment variable `PASSWORD_STORE_DIR`.
-
-```bash
-host:varfish-ansible$ export PASSWORD_STORE_DIR=$PWD/.password-store
-```
-
-You will have to do so to setup your current shell session once before you call `ansible-playbook` through `make` below.
-
-Then, initialize the password store.
-
-```bash
-host:varfish-ansible$ pass init <gpg ID; e.g., first.last@example.com>
-```
-
-Next, generate several passwords and keys and store them in the password store.
-
-```
-host:varfish-ansible$ for name in \
-        minio_access_key minio_secret_key password_postgres \
-        password_root@sodar-core-app -n django_secret_key; do \
-        pass generate varfish/$name 40; \
-    done
-```
-
-With a proper gpg-agent setup, you will only have to enter your secret key passphrase once and it is then cached by the agent.
-
-NB: You could also search for all occurences of `passwordstore` in the `inventories/` folder and place static values.
-For example, replace `"{{ lookup('passwordstore', 'varfish/password_postgres') }}"` with `"my-postgres-password"`.
-This simplifies things and removes the dependency on GPG and `gpg-agent` but leads to a less secure environment.
-
 ### Install Ansible Roles via Ansible-Galaxy
 
 ```bash
-host:varfish-ansible$ make deps
+host:varfish-installer$ make deps
+```
+
+### Generate Secret
+
+The following will create the file `inventory/production/group_vars/all/secrets.yml` with a number of secret strings.
+We would actually recommend using [Password Store](https://www.passwordstore.org/) and the [passwordstore Ansible integration](https://docs.ansible.com/ansible/latest/collections/community/general/passwordstore_lookup.html#ansible-collections-community-general-passwordstore-lookup).
+However, the setup with GPG and `gpg-agent` is a bit tricky, so we will just store the password in plain text here.
+Clearly, this is not suitable for a production setting.
+
+```bash
+host:varfish-installer$ make secrets
+```
+
+NB: the installer will later setup a user `root` in the VarFish app.
+You can find its password with:
+
+```bash
+host:varfish-installer$ grep sodar_core_app_superuser_password \
+    inventories/production/group_vars/all/secrets.yml
+sodar_core_app_superuser_password: "Uethah3hoowu0duroo0shoh4thiekai2enai6she"
 ```
 
 ### Configure Installer
@@ -71,7 +58,7 @@ host:varfish-ansible$ make deps
 Copy the configuration `.yml.EXAMPLE` files to `.yml` files.
 
 ```bash
-host:varfish-ansible$ make configs
+host:varfish-installer$ make configs
 ```
 
 You can now adjust the files `inventories/production/group_vars/all/*.yml` as follows.
@@ -102,19 +89,19 @@ You can change this with the other variables in this file.
 First, install the Jannovar REST API server and data files.
 
 ```bash
-host:varfish-ansible$ make jannovar
+host:varfish-installer$ make jannovar
 ```
 
 Second, install the PostgreSQL server that VarFish will use for its backend.
 
 ```bash
-host:varfish-ansible$ make postgres
+host:varfish-installer$ make postgres
 ```
 
 Finally, install the VarFish server and initialize the database.
 
 ```bash
-host:varfish-ansible$ make varfish
+host:varfish-installer$ make varfish
 ```
 
 At this point, you already have a working Varfish installation yet without any background data, you can refer to it at `https://<varfish_host>/`.
