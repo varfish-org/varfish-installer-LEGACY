@@ -6,3 +6,5 @@
   version: v0.2.2
 - src: bihealth.jannovar_server
   version: v0.2.1
+- src: bihealth.ssl_certs
+  version: v0.1.2

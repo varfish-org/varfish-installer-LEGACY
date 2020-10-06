@@ -1,0 +1,5 @@
+- name: install varfish server
+  hosts: varfish_servers
+  roles:
+    - role: bihealth.ssl_certs
+    - role: bihealth.varfish_server

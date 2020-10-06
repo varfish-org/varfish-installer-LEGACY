@@ -132,3 +132,25 @@ The last step will take a long time, depending on the I/O performance of your se
 For reference, on a non-VM server using fast SSD-based RAID storage, this takes ~12h.
 
 After the successful completion of the last step, you will have a working
+
+## Proper SSL Certificates
+
+By default, VarFish will generate a self-signed certificate.
+You can also provide a custom certificate filling `inventories/produciton/group_vars/all/ssl.yml` with your certificate and unencrypted secret key.
+Again, we recommend to use a password store setup and show how to use unencrypted values for demonstration purposes only.
+
+```
+- name: varfish
+  cert: |
+    -----BEGIN CERTIFICATE-----
+    MIIE5zCCAs+gAwIBAgIUJ+byPgg2I3WXgPM7rtC/gVVI35YwDQYJKoZIhvcNAQEL
+    BQAwEjEQMA4GA1UEAwwHdmFyZmlzaDAeFw0yMDEwMDYxMzE5MzJaFw0zMDEwMDQx
+    [...]
+    -----END CERTIFICATE-----
+  key: |
+    -----BEGIN RSA PRIVATE KEY-----
+    MIIJKQIBAAKCAgEA+9Ax9v6iBXLXPdxvcmBaqhE4kMmmEW+Z70r3LQx+s/9T9O1c
+    5NLU1DiDKgBnqg84DvEhjlEQNbfJQeZSg0gf5CEeFzjzAMbngckD7s/8bwOwYDhl
+    [...]
+    -----END RSA PRIVATE KEY-----
+```

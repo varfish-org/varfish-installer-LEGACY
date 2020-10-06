@@ -1,0 +1,2 @@
+# VarFish needs postgres >=11
+postgres_server_version: "12"

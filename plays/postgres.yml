@@ -1,5 +1,8 @@
 - name: install and setup postgres server for varfish
   hosts: varfish_postgres_servers
+  pre_tasks:
+    - name: fixup postgres installation for CentOS 7.8
+      yum: name=centos-release-scl state=present
   roles:
     - role: bihealth.postgres_server
       vars:

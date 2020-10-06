@@ -6,7 +6,9 @@ SHELL := bash
 CONFIGS := \
 	inventories/production/group_vars/all/jannovar.yml \
 	inventories/production/group_vars/all/servers.yml \
-	inventories/production/group_vars/all/varfish.yml
+	inventories/production/group_vars/all/varfish.yml \
+	inventories/production/group_vars/all/postgres.yml \
+	inventories/production/group_vars/all/ssl.yml
 
 .PHONY: default
 default: show-help
@@ -40,31 +42,18 @@ inventories/production/group_vars/all/%.yml: inventories/production/group_vars/a
 
 configs: $(CONFIGS)
 
-.PHONY: check
-check:
-	@if [[ ! -d .password-store ]]; then \
-		echo -e "\nERROR: missing directory .password-store\n"; \
-		echo -e "Make sure to properly initialize password store and all password."; \
-		echo -e "Refer to the README.md file for details."; \
-		exit 1; \
-	fi
-	@if [[ -n "$$PASSWORD_STORE_DIR" ]]; then \
-		echo "\nERROR: env PASSWORD_STORE_DIR not set\n"; \
-		exit 1; \
-	fi
-
 .PHONY: deps
 deps:
 	ansible-galaxy install -r requirements.yml
 
 .PHONY: jannovar
-jannovar: configs check
+jannovar: configs
 	ansible-playbook -i inventories/production plays/jannovar.yml
 
 .PHONY: postgres
-postgres: configs check
+postgres: configs
 	ansible-playbook -i inventories/production plays/postgres.yml
 
 .PHONY: varfish
-varfish: configs check
+varfish: configs
 	ansible-playbook -i inventories/production plays/varfish.yml
