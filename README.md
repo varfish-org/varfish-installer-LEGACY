@@ -115,8 +115,7 @@ https://file-public.bihealth.org/transient/varfish/
 
 ```bash
 host:~$ ssh root@<varfish_host>
-root@varfish:~$ mkdir -p /srv/varfish-data-release-<VERSION>
-root@varfish:~$ cd /srv/varfish-data-release-<VERSION>
+root@varfish:~$ cd /srv/
 root@varfish:~$ wget https://file-public.bihealth.org/transient/varfish/varfish-server-background-db-<VERSION>.tar.gz
 root@varfish:~$ tar xf varfish-server-background-db-<VERSION>.tar.gz
 ```
@@ -125,7 +124,7 @@ Then, import:
 
 ```bash
 root@varfish:~$ su - varfish
-varfish@varfish:~$ varfish-manage import_tables --tables-path /srv/varfish-data-release-<VERSION>/
+varfish@varfish:~$ varfish-manage import_tables --tables-path /srv/varfish-server-background-db-<VERSION>/
 ```
 
 The last step will take a long time, depending on the I/O performance of your server.
