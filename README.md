@@ -109,29 +109,44 @@ At this point, you already have a working Varfish installation yet without any b
 ### Download & Import Background Data
 
 The next step is to download the background data including the gnomAD database etc.
-First, download and extract the data:
+First, download and extract the data. The data releases can be found here:
 
-TODO: we need more work below
+https://file-public.bihealth.org/transient/varfish/
 
 ```bash
 host:~$ ssh root@<varfish_host>
 root@varfish:~$ mkdir -p /srv/varfish-data-release-<VERSION>
 root@varfish:~$ cd /srv/varfish-data-release-<VERSION>
-root@varfish:~$ wget XXX
-root@varfish:~$ tar xf XXX
+root@varfish:~$ wget https://file-public.bihealth.org/transient/varfish/varfish-server-background-db-<VERSION>.tar.gz
+root@varfish:~$ tar xf varfish-server-background-db-<VERSION>.tar.gz
 ```
 
 Then, import:
 
 ```bash
 root@varfish:~$ su - varfish
-varfish@varfish:~$ varfish-manage XXX
+varfish@varfish:~$ varfish-manage import_tables --tables-path /srv/varfish-data-release-<VERSION>/
 ```
 
 The last step will take a long time, depending on the I/O performance of your server.
 For reference, on a non-VM server using fast SSD-based RAID storage, this takes ~12h.
 
 After the successful completion of the last step, you will have a working
+
+### Creating Users
+
+Log in to your VarFish instance with user `root` and the password that was generated (in this example `Uethah3hoowu0duroo0shoh4thiekai2enai6she`, but this will differ in your installation):
+
+![VarFish Login](.figures/varfish_login.png)
+
+On the top right corner of the VarFish site you will find a menu. Select the `Django Admin` subentry.
+
+![VarFish Menu](.figures/varfish_menu.png)
+
+A new tab will open with the Django admin settings. Scroll down to find the `Users` section, click `add` to a new user and follow the instructions on screen.
+
+![VarFish Django Admin](.figures/varfish_django_admin.png)
+
 
 ## Proper SSL Certificates
 
