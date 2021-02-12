@@ -1,3 +1,5 @@
+:spider_web: DEPRECATED, use https://github.com/bihealth/varfish-docker-compose instead! :spider_web:
+
 # VarFish Installer Helper Files
 
 This repository contains helper files for creating a VarFish installer instance.
